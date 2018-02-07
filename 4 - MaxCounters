@@ -1,0 +1,86 @@
+/**
+ * https://app.codility.com/demo/results/trainingH53V4T-7ZJ/
+ * O(N * M)
+ * 66%
+ */
+class Solution {
+    public int[] solution(int N, int[] A) {
+        int[] counters = new int[N];
+        int maxCounter = 0;
+        for (int i = 0; i < A.length; i++) {
+            if (A[i] > N) {
+                counters = equalCounters(counters, maxCounter, 0);
+            } else {
+                counters[A[i]-1]++;
+                if (counters[A[i]-1] > maxCounter) maxCounter = counters[A[i]-1];
+            }
+        }
+        return counters;
+    }
+    
+    private int[] equalCounters(int[] counters, int value, int position) {
+        counters[position] = value;
+        position++;
+        if (position == counters.length) return counters;
+        else return equalCounters(counters, value, position);
+    }
+}
+
+/**
+ * https://app.codility.com/demo/results/trainingHWXKAZ-2QH/
+ * O(N * M)
+ * 66%
+ */
+class Solution {
+    public int[] solution(int N, int[] A) {
+        return processArray(A, new int[N], N, 0, 0);
+    }
+    
+    private int[] processArray(int[] A, int[] counters, int N, int position, int maxCounter) {
+        if (position == A.length) return counters;
+        if (A[position] > N) {
+            return processArray(A, equalCounters(counters, maxCounter, 0), N, position + 1, maxCounter);
+        } else {
+            counters[A[position] - 1]++;
+            if (counters[A[position] - 1] > maxCounter) maxCounter = counters[A[position] - 1];
+            return processArray(A, counters, N, position + 1, maxCounter);
+        }
+    }
+    
+    private int[] equalCounters(int[] counters, int value, int position) {
+        counters[position] = value;
+        position++;
+        if (position == counters.length) return counters;
+        else return equalCounters(counters, value, position);
+    }
+}
+
+/**
+ * Sometimes, simple is better...
+ *
+ * https://app.codility.com/demo/results/trainingFU7VK4-T3T/
+ * O(N + M)
+ * 100%
+ */
+ class Solution {
+    public int[] solution(int N, int[] A) {
+        int[] counters = new int[N];
+        int maxCounter = 0;
+        int tmpCounter = 0;
+        for (int i = 0; i < A.length; i++) {
+            if (A[i] > N) {
+                tmpCounter = maxCounter;
+            } else {
+                if (counters[A[i]-1] < tmpCounter) counters[A[i]-1] = tmpCounter;
+                counters[A[i]-1]++;
+                if (counters[A[i]-1] > maxCounter) maxCounter = counters[A[i]-1];
+            }
+        }
+        
+        for (int i = 0 ; i< N; i++) {
+            if (counters[i] < tmpCounter) counters[i] = tmpCounter;
+        }
+        
+        return counters;
+    }
+}

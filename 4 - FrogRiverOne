@@ -1,0 +1,19 @@
+/**
+ * https://app.codility.com/demo/results/trainingV93KQW-N3A/
+ * O(N)
+ * 100%
+ */
+class Solution {
+    public int solution(int X, int[] A) {
+        int count = 0;
+        int[] leafTimes = new int[X];
+        for (int i = 0; i < X; i++) leafTimes[i] = -1;
+        for (int i = 0; i < A.length; i++) {
+            if (A[i] <= X && leafTimes[A[i]-1] == -1) {
+                leafTimes[A[i]-1] = i;
+            }
+        }
+        Arrays.sort(leafTimes);
+        return leafTimes[0] == -1 ? -1 : leafTimes[leafTimes.length - 1];
+    }
+}
