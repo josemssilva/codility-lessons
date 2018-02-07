@@ -1,0 +1,18 @@
+/**
+ * https://app.codility.com/demo/results/trainingPYDC6U-N2U/
+ * O(N)
+ * 91%
+ */
+class Solution {
+    public int solution(int[] A) {
+        int sumLeft = A[0];
+        int sumRight = Arrays.stream(A).sum() - A[0];
+        int bestDiff = Math.abs(sumLeft - sumRight);
+        for (int i = 1; i < A.length - 1; i++) {
+            sumLeft += A[i];
+            sumRight -= A[i];
+            if (Math.abs(sumLeft - sumRight) < bestDiff) bestDiff = Math.abs(sumLeft - sumRight);
+        }
+        return bestDiff;
+    }
+}

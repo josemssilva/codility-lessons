@@ -1,0 +1,26 @@
+/**
+ * https://app.codility.com/demo/results/trainingUXHQ3C-73K/
+ * O(Y-X) 
+ * 44%
+ */
+class Solution {
+    public int solution(int X, int Y, int D) {
+        return timesJump(0, Y-X, D);
+    }
+    
+    private int timesJump(int times, int distance, int jump) {
+        if (distance <= 0) return times;
+        else return timesJump(times+1, distance - jump, jump);
+    }
+}
+
+/**
+ * https://app.codility.com/demo/results/trainingK4B8Q7-EFH/
+ * O(1) 
+ * 100%
+ */
+class Solution {
+    public int solution(int X, int Y, int D) {
+        return (int) Math.ceil((double) (Y-X) / (double) D);
+    }
+}

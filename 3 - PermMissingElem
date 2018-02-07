@@ -1,0 +1,15 @@
+**
+ * https://app.codility.com/demo/results/trainingA6ETJG-43C/
+ * O(N) or O(N * log(N))
+ * 100%
+ */
+class Solution {
+    public int solution(int[] A) {
+        int index = 1;
+        Arrays.sort(A);
+        while(index <= A.length && A[index - 1] == index){
+            index++;
+        }
+        return index;
+    }
+}

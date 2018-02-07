@@ -1,0 +1,19 @@
+/**
+ * https://app.codility.com/demo/results/trainingFUBVRK-FX2/
+ * O(log(N)) 
+ * 100%
+ */
+class Solution {
+    public int solution(int N) {
+        int count = 0;
+        int lastIndex = 0;
+        String bitString = Integer.toString(N, 2);
+        while (bitString.indexOf("1", lastIndex) != -1) {
+            if (bitString.indexOf("1", lastIndex) - lastIndex > count) {
+                count = bitString.indexOf("1", lastIndex) - lastIndex;
+            }
+            lastIndex = bitString.indexOf("1", lastIndex)+1;
+        }
+        return count;
+    }
+}

@@ -1,0 +1,18 @@
+/**
+ * https://app.codility.com/demo/results/trainingUW8HYX-9MN/
+ * O(N)
+ * 100%
+ */
+ class Solution {
+    public int[] solution(int[] A, int K) {
+        if (A.length < 2) return A;
+        int newK = K % A.length;
+        if (newK == 0) return A;
+        int[] newA = new int[A.length];
+        for (int i = 0; i < A.length; i++) {
+            int newIndex = (i + newK < A.length) ? i + newK : newK - (A.length - i);
+            newA[newIndex] = A[i];
+        }
+        return newA;
+    }
+}

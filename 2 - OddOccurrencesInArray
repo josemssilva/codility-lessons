@@ -1,0 +1,21 @@
+/**
+ * https://app.codility.com/demo/results/trainingUW8HYX-9MN/
+ * O(N) or O(N*log(N)) 
+ * 100%
+ */
+class Solution {
+    public int solution(int[] A) {
+        Arrays.sort(A);
+        int firstIndex = 0;
+        for (int i = 1; i < A.length; i++) {
+            if (A[i] != A[firstIndex]) { 
+                if ((i - firstIndex) % 2 != 0) {
+                    break;
+                } else {
+                    firstIndex = i;
+                }
+            }
+        }
+        return A[firstIndex];
+    }
+}
