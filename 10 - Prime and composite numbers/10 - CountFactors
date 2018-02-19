@@ -1,0 +1,20 @@
+/**
+ * https://app.codility.com/demo/results/trainingSVBVX7-8EU/
+ * O(sqrt(N))
+ * 92%
+ */
+
+class Solution {
+    public int solution(int N) {
+        if (N == 1) return 1;
+        int i = 1;
+        int count = 0;
+        while(i * i < N) {
+            if (N % i == 0) count += 2;
+            i++;
+        }
+        if (i * i == N) count++;
+        
+        return count;
+    }
+}
