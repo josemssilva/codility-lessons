@@ -1,0 +1,27 @@
+/**
+ * https://app.codility.com/demo/results/trainingK6HSXX-Y2F/
+ * O(N)
+ * 100%
+ */
+
+class Solution {
+    public int solution(int[] H) {
+        Stack<Integer> stack = new Stack<Integer>();
+        int stackCount = 0;
+        
+        for (int i = 0; i < H.length; i++) {
+            while (!stack.isEmpty() && stack.peek() > H[i]) {
+                stack.pop();
+            }
+            
+            if (!stack.isEmpty() && stack.peek() == H[i]) {
+                continue;
+            } else {
+                stack.push(H[i]);
+                stackCount++;
+            }
+        }
+        
+        return stackCount;
+    }
+}

@@ -1,0 +1,21 @@
+/**
+ * https://app.codility.com/demo/results/training78C7KW-8J9/
+ * O(N)
+ * 100%
+ */
+
+class Solution {
+    public int solution(String S) {
+        int count = 0;
+        boolean isNested = true;
+        for (int i = 0; i < S.length() && count >= 0; i++) {
+            if (S.charAt(i) == '(') {
+                count++;
+            } else {
+                count--;
+            }
+        }
+        
+        return isNested && count== 0 ? 1 : 0;
+    }
+}
