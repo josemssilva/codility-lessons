@@ -1,0 +1,81 @@
+/**
+ * https://app.codility.com/demo/results/training5D33NU-99M/
+ * O(N * log(N))
+ * 0%
+ */
+
+class Solution {
+    public int solution(int[] A) {
+        boolean hasTriplet = false;
+        int tmpSecond;
+        for (int i = 0; i < A.length - 2 && !hasTriplet; i++) {
+            tmpSecond = -1;
+            for (int j = i+1; j < A.length && !hasTriplet; j++) {
+                if (tmpSecond == -1 && j < A.length-1 && A[j] > A[i]) {
+                    tmpSecond = j;
+                } else if (tmpSecond != -1 && A[j] > A[tmpSecond]) {
+                    hasTriplet = true;
+                }
+            }
+        }
+        return hasTriplet? 1 : 0;
+    }
+}
+
+/**
+ * https://app.codility.com/demo/results/training9EJK3Y-FBS/
+ * O(N * log(N))
+ * 87%
+ */
+
+class Solution {
+    public int solution(int[] A) {
+        boolean hasTriplet = false;
+        int tmpSecond;
+        for (int i = 0; i < A.length - 2 && !hasTriplet; i++) {
+            tmpSecond = -1;
+            for (int j = i+1; j < A.length - 1 && !hasTriplet && isPartialCorrect(A[i], A[j]); j++) {
+                for (int k = j+1; k < A.length && !hasTriplet; k++) {
+                    hasTriplet = isCorrect(A[i], A[j], A[k]);
+                }
+            }
+        }
+        return hasTriplet? 1 : 0;
+    }
+    
+    private boolean isPartialCorrect(int a, int b) {
+        return a+b > a-b && a + b > b -a;
+    }
+    
+    private boolean isCorrect(int a, int b, int c) {
+        return a+b > c && b + c > a && c + a > b;
+    }
+}
+
+/**
+ * https://app.codility.com/demo/results/trainingXZD8M3-QU2/
+ * O(N * log(N))
+ * 93%
+ */
+
+class Solution {
+    public int solution(int[] A) {
+        boolean hasTriplet = false;
+        for (int i = 0; i < A.length - 2 && !hasTriplet; i++) {
+            for (int j = i+1; j < A.length - 1 && !hasTriplet && isPartialCorrect((long) A[i], (long) A[j]); j++) {
+                for (int k = j+1; k < A.length && !hasTriplet; k++) {
+                    hasTriplet = isCorrect((long) A[i], (long) A[j], (long) A[k]);
+                }
+            }
+        }
+        return hasTriplet? 1 : 0;
+    }
+    
+    private boolean isPartialCorrect(long a, long b) {
+        return a+b > a-b && a + b > b -a;
+    }
+    
+    private boolean isCorrect(long a, long b, long c) {
+        return a+b > c && b + c > a && c + a > b;
+    }
+}

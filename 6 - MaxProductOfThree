@@ -1,0 +1,103 @@
+/**
+ * https://app.codility.com/demo/results/training6AV8JY-852/
+ * O(N**3)
+ * 43%
+ */
+
+class Solution {
+    public int solution(int[] A) {
+        int maxSum = productOf(A[0], A[1], A[2]);
+        for (int i = 0; i < A.length - 2; i++) {
+            for (int j = i+1; j < A.length - 1; j++) {
+                for (int k = j+1; k < A.length; k++) {
+                    maxSum = Math.max(maxSum, productOf(A[i], A[j], A[k]));
+                }
+            }
+        }
+        return maxSum;
+    }
+    
+    private int productOf(int a, int b, int c) {
+        return a * b * c;
+    }
+}
+
+/**
+ * https://app.codility.com/demo/results/trainingKXGM3Q-EZG/
+ * O(N**3)
+ * 44%
+ */
+
+
+class Solution {
+    public int solution(int[] A) {
+        int maxSum = productOf(A[0], A[1], A[2]);
+        int bestProduct = A[0] * A[1];
+        int curProduct;
+        for (int i = 0; i < A.length - 2; i++) {
+            for (int j = i+1; j < A.length - 1; j++) {
+                curProduct = productOf(A[i], A[j], 1);
+                if ((curProduct < 0 && curProduct * -1000 > maxSum) || (curProduct > 0 && curProduct * 1000 > maxSum)) {
+                    for (int k = j+1; k < A.length; k++) {
+                        maxSum = Math.max(maxSum, productOf(A[i], A[j], A[k]));
+                    }
+                }
+            }
+        }
+        return maxSum;
+    }
+    
+    private int productOf(int a, int b, int c) {
+        return a * b * c;
+    }
+}
+
+/**
+ * https://app.codility.com/demo/results/trainingMVJSX5-G48/
+ * O(N * log(N))
+ * 100%
+ */
+
+class Solution {
+    
+    int[] max = {Integer.MIN_VALUE, Integer.MIN_VALUE, Integer.MIN_VALUE};
+    int[] min = {Integer.MAX_VALUE, Integer.MAX_VALUE};
+    
+    public int solution(int[] A) {
+        for (int i = 0; i < A.length; i++) {
+            updateMax(A[i]);
+            updateMin(A[i]);
+        }
+        return Math.max(getMax(), getMin());
+    }
+    
+    private void updateMax(int a) {
+        if (a >= max[2]) {
+            max[0] = max[1];
+            max[1] = max[2];
+            max[2] = a;
+        } else if (a >= max[1]) {
+            max[0] = max[1];
+            max[1] = a;
+        } else if (a >= max[0]) {
+            max[0] = a;
+        }
+    }
+    
+    private void updateMin(int a) {
+        if (a <= min[1]) {
+            min[0] = min[1];
+            min[1] = a;
+        } else if (a <= min[0]) {
+            min[0] = a;
+        }
+    }
+    
+    private int getMax() {
+        return max[0] * max[1] * max[2]; 
+    }
+    
+    private int getMin() {
+        return min[0] * min [1] * max[2];
+    }
+}
