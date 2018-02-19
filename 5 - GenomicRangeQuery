@@ -1,0 +1,50 @@
+/**
+ * Got really, really stuck with this problem. After check CodeBusta's answer here (https://stackoverflow.com/questions/19552754/java-codility-training-genomic-range-query), everything went pretty clear. As so, this is his answer and not really mine.
+ *
+ * https://app.codility.com/demo/results/trainingCSTR83-38N/
+ * O(N+M)
+ * 100%
+ */
+
+ class Solution {
+    public int[] solution(String S, int[] P, int[] Q) {
+        int[][] counters = new int[3][S.length() + 1];
+        int[] result = new int[P.length];
+        
+        short a, c, g;
+        for (int i = 0; i < S.length(); i++) {
+            a = 0; c = 0; g = 0;
+            switch (S.charAt(i)) {
+                case 'A':
+                    a = 1;
+                    break;
+                case 'C':
+                    c = 1;
+                    break;
+                case 'G':
+                    g = 1;
+                    break;
+            }
+            counters[0][i+1] = counters[0][i] + a;
+            counters[1][i+1] = counters[1][i] + c;
+            counters[2][i+1] = counters[2][i] + g;
+        }
+        
+        int fromIndex, toIndex;
+        for (int i = 0; i < P.length; i++) {
+            fromIndex = P[i];
+            toIndex = Q[i] + 1;
+            if (counters[0][toIndex] - counters[0][fromIndex] > 0) {
+                result[i] = 1;    
+            } else if (counters[1][toIndex] - counters[1][fromIndex] > 0) {
+                result[i] = 2;
+            } else if (counters[2][toIndex] - counters[2][fromIndex] > 0) {
+                result[i] = 3;
+            } else {
+                result[i] = 4;
+            }
+        }
+        
+        return result;
+    }
+}
