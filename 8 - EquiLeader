@@ -1,0 +1,71 @@
+/**
+ * https://app.codility.com/demo/results/trainingJT7K3E-42T/
+ * O(N**2)
+ * 44%
+ */
+
+class Solution {
+    public int solution(int[] A) {
+        int arrayLength = A.length;
+        if (arrayLength == 1) return 1;
+        int[] orderedArray = Arrays.copyOf(A, arrayLength);
+        Arrays.sort(orderedArray);
+        int leader = orderedArray[arrayLength / 2];
+        int leaderCount = 0;
+        
+        for (int i = 0; i < arrayLength && orderedArray[i] <= leader; i++) {
+            if (orderedArray[i] == leader) leaderCount++;
+        }
+        
+        int k;
+        int tmpCount;
+        int equileaders = 0;
+        
+        for (int i = 0; i < arrayLength; i++) {
+            k = 0;
+            tmpCount = 0;
+            while (k<=i) {
+                if (A[k] == leader) tmpCount++;
+                k++;
+            }
+            if ((tmpCount > (i + 1) / 2) && (leaderCount - tmpCount > (arrayLength - (i+1)) / 2)) {
+                equileaders++; 
+            }
+        }
+        
+        return equileaders;
+    }
+}
+
+/**
+ * https://app.codility.com/demo/results/trainingQYRX3F-JUG/
+ * O(N)
+ * 100%
+ */
+
+class Solution {
+    public int solution(int[] A) {
+        int arrayLength = A.length;
+        if (arrayLength == 1) return 1;
+        int[] orderedArray = Arrays.copyOf(A, arrayLength);
+        Arrays.sort(orderedArray);
+        int leader = orderedArray[arrayLength / 2];
+        int leaderCount = 0;
+        
+        for (int i = 0; i < arrayLength && orderedArray[i] <= leader; i++) {
+            if (orderedArray[i] == leader) leaderCount++;
+        }
+        
+        int tmpCount = 0;
+        int equileaders = 0;
+        
+        for (int i = 0; i < arrayLength; i++) {
+            if (A[i] == leader) tmpCount++;
+            if ((tmpCount > (i + 1) / 2) && (leaderCount - tmpCount > (arrayLength - (i+1)) / 2)) {
+                equileaders++; 
+            }
+        }
+        
+        return equileaders;
+    }
+}
