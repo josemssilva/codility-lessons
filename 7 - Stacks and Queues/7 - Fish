@@ -1,0 +1,24 @@
+/**
+ * https://app.codility.com/demo/results/trainingWAGUZ9-DRA/
+ * O(N)
+ * 100%
+ */
+class Solution {
+    public int solution(int[] A, int[] B) {
+        int upstream = 0;
+        List<Integer> downstream = new ArrayList<>();
+        for (int i = 0; i < A.length; i++) {
+            if (B[i] == 1) {
+                downstream.add(A[i]);
+            } else {
+                int size = downstream.size();
+                while(size > 0 && downstream.get(size - 1) < A[i]) {
+                    downstream.remove(size -1);
+                    size--;
+                }
+                if (size == 0) upstream++;
+            }
+        }
+        return upstream + downstream.size();
+    }
+}
