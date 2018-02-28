@@ -1,0 +1,24 @@
+/**
+ * https://app.codility.com/demo/results/training376KTZ-QQK/
+ * O(N)
+ * 100%
+ */
+class Solution {
+    public int solution(int[] A) {
+        if (A.length == 0) return 0;
+        int maxSlice = 0;
+        int curSlice = 0;
+        int firstValue = A[0];
+        int tmpSlice;
+        for (int i = 1; i < A.length; i++) {
+            tmpSlice = A[i] - firstValue;
+            curSlice = Math.max(curSlice, tmpSlice);
+            if (tmpSlice < 0) {
+            	// if tmpSlice is negative, then we need to start from this new low.
+                firstValue = A[i];
+            }
+            maxSlice = Math.max(maxSlice, curSlice);
+        }
+        return maxSlice;
+    }
+}
