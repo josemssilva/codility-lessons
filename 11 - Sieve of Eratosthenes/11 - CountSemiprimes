@@ -1,0 +1,128 @@
+/**
+ * https://app.codility.com/demo/results/training6KUKPY-38K/
+ * 55%
+ * O(N * log(log(N)) + M * N) or O(M * N**3) or O(M * N ** (3/2))
+ */
+class Solution {
+    public int[] solution(int N, int[] P, int[] Q) {
+        int length = P.length;
+        ArrayList<Integer> primes = new ArrayList<>();
+        ArrayList<HashSet<Integer>> primesSetArray = new ArrayList<>();
+        int[] primesCountArray = new int[length];
+        boolean isPrime;
+        for (int i = 2; i <= N / 2; i++) {
+            isPrime = true;
+            for (Integer value : primes) {
+                if (i % value == 0) {
+                    isPrime = false;
+                    break;
+                }
+            }
+            if (isPrime) primes.add(i);
+        }
+        int primesLength = primes.size();
+        for (int i = 0; i < length; i++) {
+            primesSetArray.add(new HashSet<>());
+            for(int j = 0; j < primesLength && primes.get(j)*primes.get(j) <= Q[i]; j++) {
+                for(int k = j; k < primesLength && primes.get(j)*primes.get(k) <= Q[i]; k++) {
+                    int primesValue = primes.get(j)*primes.get(k);
+                    if (primesValue >= P[i] && primesValue <= Q[i]) primesSetArray.get(i).add(primesValue);
+                }
+            }
+            primesCountArray[i] = primesSetArray.get(i).size();
+        }
+
+        return primesCountArray;
+    }
+}
+
+/**
+ * https://app.codility.com/demo/results/training6KUKPY-38K/
+ * 55%
+ * O(N * log(log(N)) + M * N) or O(M * N**3) or O(M * N ** (3/2))
+ */
+ class Solution {
+    public int[] solution(int N, int[] P, int[] Q) {
+        int[] f = new int[N + 1];
+        int i = 2;
+        int k;
+        ArrayList<HashSet<Integer>> setList = new ArrayList<>();
+        int length = P.length;
+        int[] result = new int[length];
+        while (i * i <= N) {
+            if (f[i] == 0) {
+                k = i * i;
+                while (k <= N) {
+                    if (f[k] == 0) {
+                        f[k] = i;
+                    }
+                    k += i;
+                }
+            }
+            i++;
+        }
+        for(int a = 0; a < length; a++) {
+            setList.add(new HashSet<>());
+            for (int b = 2; b * b <= Q[a]; b++) {
+                if (f[b] == 0) {
+                    for (int c = b; c * b <= Q[a]; c++) {
+                        if (f[c] == 0 && c*b >= P[a]) {
+                            setList.get(a).add(c*b);
+                        }
+                    }
+                }
+            }
+        }
+        for(int z = 0; z < length; z++) {
+            result[z] = setList.get(z).size();
+        }
+        return result;
+    }
+}
+
+/**
+ * https://app.codility.com/demo/results/trainingERXVG8-KM8/
+ * 100%
+ * O(N * log(log(N)) + M)
+ */
+class Solution {
+    public int[] solution(int N, int[] P, int[] Q) {
+        int[] f = new int[N + 1];
+        int[] semi = new int[N + 1];
+        int i = 2;
+        int k;
+        int length = P.length;
+        int[] result = new int[length];
+        while (i * i <= N) {
+            if (f[i] == 0) {
+                k = i * i;
+                while (k <= N) {
+                    if (f[k] == 0) {
+                        f[k] = i;
+                    }
+                    k += i;
+                }
+            }
+            i++;
+        }
+        for (int j = 2; j*j <=N; j++) {
+            if (f[j] == 0) {
+                for (int l = j; j * l <= N; l++) {
+                    if (f[l] == 0) {
+                        semi[j*l] = 1;
+                    }
+                }
+            }
+        }
+        int[] sumSemis = new int[N+1];
+        for(int j = 2; j <= N; j++) {
+            sumSemis[j] = sumSemis[j-1] + semi[j];
+        }
+
+        for(int a = 0; a < length; a++) {
+            result[a] = sumSemis[Q[a]] - sumSemis[P[a] - 1];
+        }
+
+        return result;
+    }
+}
